@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Help</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+  <head>
+    <title>Help</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
 
-<%= yield %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 
-</body>
+    <% if current_user %>
+      Hi, <%= current_user.email %>
+    <%= link_to('登出', destroy_user_session_path, :method => :delete) %> |
+    <%= link_to('修改密碼', edit_registration_path(:user)) %>
+  <% else %>
+    <%= link_to('註冊', new_registration_path(:user)) %> |
+    <%= link_to('登入', new_session_path(:user)) %>
+  <% end %>
+
+  <%= yield %>
+
+  </body>
 </html>
