@@ -1,0 +1,8 @@
+<h3>Title:</h3>
+<div><%= @post.name %></div>
+<h4>Context:</h4>
+<div>
+  <p><%=simple_format @post.description %></p>
+</div>
+
+<%= link_to "Back to homepage", posts_path %>

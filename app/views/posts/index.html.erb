@@ -1,0 +1,30 @@
+<table class="table table-hover">
+  <tr>
+    <td><h3>Post</h3></td>
+    <td><h3>Author</h3></td>
+    <td><h3>Created time</h3></td>
+    <td><h3>Function</h3></td>
+  </tr>
+  <% @posts.try(:each) do |post| %>
+    <tr>
+      <td>
+        <%=link_to post.name, post_path(post) %>
+      </td>
+      <td>
+      </td>
+      <td>
+        <%= post.created_at %>
+      </td>
+      <td>
+        <%= link_to 'Show', post_path(post),:class=> "btn btn-default"%>
+        <%= link_to 'Edit', edit_post_path(post),:class=> "btn btn-default" %>
+        <%= link_to 'Delete', post_path(post), :method=> :delete, :class=> "btn btn-default" %>
+      </td>
+    </tr>
+  <% end %>
+
+</table>
+<%= link_to 'New Post', new_post_path %></br>
+
+<%#= paginate @posts %>
+
