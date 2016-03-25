@@ -1,0 +1,2 @@
+module PostAttendeesHelper
+end

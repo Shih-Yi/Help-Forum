@@ -1,0 +1,7 @@
+<% @post.comments.each do |comment| %>
+  <div class="panel panel-info"> <h5>Comment:</h5>
+    <p><%=comment.name %></p>
+    <p><%=comment.body %></p></div>
+  <%= link_to 'edit', edit_post_comment_path(@post, comment) %>
+<%end %>
+

@@ -6,3 +6,13 @@
 </div>
 
 <%= link_to "Back to homepage", posts_path %>
+
+<h4><%= @post.comments.count %>Comments</h4>
+
+<div class="panel-footer">
+  <%= render :partial=> 'post_comments/comment' %>
+</div>
+
+</div>
+<h4>Add a comment:</h4>
+<%= render "post_comments/form" %>
