@@ -3,5 +3,6 @@
     <p><%=comment.name %></p>
     <p><%=comment.body %></p></div>
   <%= link_to 'edit', edit_post_comment_path(@post, comment) %>
+  <%= link_to 'delete', post_comment_path(@post, comment), method: :delete %>
 <%end %>
 
