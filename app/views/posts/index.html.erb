@@ -1,3 +1,14 @@
+
+
+<h2>New Post</h2>
+<%= form_for ([ @post]) do |f| %>
+  <p><%= render :partial => 'form', :locals=> {:f=> f }%></p>
+  <p><%= f.submit "Update" %></p>
+<% end %>
+
+<%= link_to 'Sort by Name', posts_path( :order => "name") %>
+<%= link_to 'Sort by Default', posts_path %>
+
 <table class="table table-hover">
   <tr>
     <td><h3>Post</h3></td>
@@ -17,10 +28,10 @@
         <%= post.created_at %>
       </td>
       <td>
-      <% if current_user == post.user  %>
-        <%= link_to 'Show', post_path(post),:class=> "btn btn-default"%>
-        <%= link_to 'Edit', edit_post_path(post),:class=> "btn btn-default" %>
-        <%= link_to 'Delete', post_path(post), :method=> :delete, :class=> "btn btn-default" %>
+        <% if current_user == post.user  %>
+          <%= link_to 'Show', post_path(post),:class=> "btn btn-default"%>
+          <%= link_to 'Edit', edit_post_path(post, page: params[:page]),:class=> "btn btn-default" %>
+          <%= link_to 'Delete', post_path(post,page: params[:page]), :method=> :delete, :class=> "btn btn-default" %>
         <% end %>
       </td>
     </tr>

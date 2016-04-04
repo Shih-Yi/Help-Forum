@@ -1,5 +1,10 @@
 <p>Category: <%= @post.category.try(:name) %><p>
 
+<p>Group:
+<% @post.groups.each do |g| %>
+  <%= g.name %>
+<% end %>
+</p>
 <h3>Title:</h3>
 <div><%= @post.name %></div>
 <h4>Context:</h4>

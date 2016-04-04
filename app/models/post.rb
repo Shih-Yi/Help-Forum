@@ -5,4 +5,7 @@ class Post < ActiveRecord::Base
   has_many :comments
   belongs_to :category
   validates_presence_of :name
+
+  has_many :post_groupships
+  has_many :groups, :through => :post_groupships
 end
