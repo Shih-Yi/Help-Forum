@@ -2,6 +2,8 @@ class PostCommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(params[:comment].permit(:name, :body))
+    @comment.user = current_user
+    @comment.save
 
     redirect_to post_path(@post)
 
@@ -12,6 +14,8 @@ class PostCommentsController < ApplicationController
 
     @post = Post.find( params[:post_id] )
     @comment = @post.comments.find( params[:id] )
+    if current_user && @comment.try(:user) == current_user 
+    end
 
   end
 
@@ -19,10 +23,12 @@ class PostCommentsController < ApplicationController
     @post = Post.find(params[:post_id] )
     @comment = @post.comments.find( params[:id] )
 
-    if @comment.update( comment_params )
-      redirect_to post_url( @post )
-    else
-      render :action => :edit
+    if current_user && @comment.try(:user) == current_user 
+      if @comment.update( comment_params )
+        redirect_to post_url( @post )
+      else
+        render :action => :edit
+      end
     end
 
   end

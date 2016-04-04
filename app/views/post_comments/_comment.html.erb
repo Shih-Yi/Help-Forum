@@ -2,7 +2,9 @@
   <div class="panel panel-info"> <h5>Comment:</h5>
     <p><%=comment.name %></p>
     <p><%=comment.body %></p></div>
-  <%= link_to 'edit', edit_post_comment_path(@post, comment) %>
-  <%= link_to 'delete', post_comment_path(@post, comment), method: :delete %>
+  <% if current_user && comment.try(:user) == current_user %>
+    <%= link_to 'edit', edit_post_comment_path(@post, comment) %>
+    <%= link_to 'delete', post_comment_path(@post, comment), method: :delete %>
+  <% end %>
 <%end %>
 

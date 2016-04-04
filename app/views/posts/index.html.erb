@@ -11,14 +11,17 @@
         <%=link_to post.name, post_path(post) %>
       </td>
       <td>
+        <%= post.user.try(:email) %>
       </td>
       <td>
         <%= post.created_at %>
       </td>
       <td>
+      <% if current_user == post.user  %>
         <%= link_to 'Show', post_path(post),:class=> "btn btn-default"%>
         <%= link_to 'Edit', edit_post_path(post),:class=> "btn btn-default" %>
         <%= link_to 'Delete', post_path(post), :method=> :delete, :class=> "btn btn-default" %>
+        <% end %>
       </td>
     </tr>
   <% end %>
