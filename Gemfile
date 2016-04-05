@@ -18,6 +18,8 @@ gem "kaminari"
 
 gem 'devise'
 
+gem 'awesome_rails_console'
+
 gem 'bootstrap-sass', '~> 3.3.6'
 
 # Use jquery as the JavaScript library
