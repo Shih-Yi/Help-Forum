@@ -6,11 +6,15 @@ class PostsController < ApplicationController
 
   def index
     @groups = Group.all
+    @comments = Comment.all
+    @posts = Post.page(params[:page]).per(5)
 
     @post = Post.new
+
     sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
-    @posts = Post.page(params[:page]).per(5)
     @posts = @posts.order(sort_by)
+
+
 
     if params[:group_id]
       @posts = Group.find(params[:group_id]).posts.page(params[:page]).per(5)
@@ -18,7 +22,7 @@ class PostsController < ApplicationController
 
   end
 
-  def new 
+  def new
     @post = Post.new
   end
 
@@ -43,7 +47,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    if current_user && @post.user == current_user 
+    if current_user && @post.user == current_user
       @post.update(post_params)
       redirect_to post_path(@post)
     end
@@ -57,7 +61,7 @@ class PostsController < ApplicationController
     flash[:alert] = "event was successfully deleted"
   end
 
-  private 
+  private
 
   def set_post
     @post = Post.find(params[:id])
