@@ -5,10 +5,17 @@ class PostsController < ApplicationController
   before_action :set_post, :only => [ :show, :edit, :update, :destroy]
 
   def index
+    @groups = Group.all
+
     @post = Post.new
     sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
     @posts = Post.page(params[:page]).per(5)
     @posts = @posts.order(sort_by)
+
+    if params[:group_id]
+      @posts = Group.find(params[:group_id]).posts.page(params[:page]).per(5)
+    end
+
   end
 
   def new 
@@ -57,7 +64,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:name, :description, :category_id,:group_ids => [])
+    params.require(:post).permit(:name, :description, :category_id)
 
   end
 
