@@ -8,8 +8,8 @@
 
 <%= link_to 'Sort by Name', posts_path( :order => "name") %>
 <%= link_to 'Sort by Default', posts_path %>
+<%= link_to 'Sort by last comment', posts_path( :order1 => "@com") %>
 
-<%= @posts.name %>
 
 <p>
 <% @groups.try(:each) do |g| %>
@@ -23,6 +23,8 @@
     <td><h3>Author</h3></td>
     <td><h3>Created time</h3></td>
     <td><h3>Last Comment Created time</h3></td>
+    <td><h3>Comment counts</h3></td>
+    <td><h3>views counts</h3></td>
     <td><h3>Function</h3></td>
   </tr>
   <% @posts.try(:each) do |post| %>
@@ -37,7 +39,14 @@
         <%= post.created_at %>
       </td>
       <td>
+        <%#= post.try(@com) %>
         <%= post.try(:comments).last.try(:updated_at) %>
+      </td>
+      <td>
+        <%= post.try(:comments).count %>
+      </td>
+      <td>
+        <%= post.post_count %>
       </td>
       <td>
         <% if current_user == post.user  %>

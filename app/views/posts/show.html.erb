@@ -1,5 +1,7 @@
 <p>Category: <%= @post.category.try(:name) %><p>
 
+<h3>View count:<%= @post.post_count %></h3>
+
 <p>Group:
 <% @post.groups.each do |g| %>
   <%= g.name %>

@@ -8,4 +8,10 @@ class Post < ActiveRecord::Base
 
   has_many :post_groupships
   has_many :groups, :through => :post_groupships
+
+  def post_count!
+    self.post_count ||= 0
+    self.post_count += 1
+    self.save
+  end
 end

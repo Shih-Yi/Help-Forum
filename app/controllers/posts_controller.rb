@@ -5,15 +5,24 @@ class PostsController < ApplicationController
   before_action :set_post, :only => [ :show, :edit, :update, :destroy]
 
   def index
+
     @groups = Group.all
     @comments = Comment.all
     @posts = Post.page(params[:page]).per(5)
-
     @post = Post.new
 
-    sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
-    @posts = @posts.order(sort_by)
 
+    @com = @comments.last.try(:name)
+
+    if params[:order]
+      sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
+      @posts = @posts.order(sort_by)
+    end
+
+    if params[:order1]
+      sort_by = (params[:order1] == 'lastcomment') ? '@com' : 'created_at'
+      @posts = @posts.order(sort_by)
+    end
 
 
     if params[:group_id]
@@ -38,6 +47,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @post.post_count!
 
   end
 
