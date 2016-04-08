@@ -1,26 +1,31 @@
 class PostsController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index]
-
   before_action :set_post, :only => [ :show, :edit, :update, :destroy]
+  before_filter :authenticate, except: [:index, :show]
 
   def index
 
     @groups = Group.all
     @comments = Comment.all
     @posts = Post.page(params[:page]).per(5)
-    @post = Post.new
 
+    if params[:post_i] && current_user == Post.find(params[:post_i]).user
+      @post = Post.find(params[:post_i])
+    else
+      @post = Post.new
+    end
+
+    # @page = params[:page]
 
     @com = @comments.last.try(:name)
 
-    if params[:order]
-      sort_by = (params[:order] == 'name') ? 'name' : 'created_at'
-      @posts = @posts.order(sort_by)
-    end
-
-    if params[:order1]
-      sort_by = (params[:order1] == 'lastcomment') ? '@com' : 'created_at'
+    if params[:order] # Parameter: {:xxx => "fdsuifd", :order => "sdf"}
+      if params[:order] == 'name'
+        sort_by = params[:order]
+      elsif params[:order] == 'created_at'
+        sort_by = params[:order]
+      end
       @posts = @posts.order(sort_by)
     end
 
@@ -31,9 +36,9 @@ class PostsController < ApplicationController
 
   end
 
-  def new
-    @post = Post.new
-  end
+  # def new
+  #   @post = Post.new
+  # end
 
   def create
     @post = Post.new(post_params)
@@ -51,15 +56,20 @@ class PostsController < ApplicationController
 
   end
 
-  def edit
-    @posts = Post.page(params[:page]).per(5)
-    render :index
-  end
+  # def edit
+  #   @posts = Post.page(params[:page]).per(5)
+  #   if current_user != @post.user
+  #     flash[:notice] = "Don't modified another user's post!"
+  #     @post = Post.new
+  #   end
+  #   render :index
+  # end
 
   def update
     if current_user && @post.user == current_user
       @post.update(post_params)
-      redirect_to post_path(@post)
+
+      redirect_to posts_path(:page => params[:post][:page])
     end
     flash[:notice] = "event was successfully updated"
   end
@@ -80,6 +90,10 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:name, :description, :category_id,:group_ids =>[])
 
+  end
+
+  def authenticate
+    redirect_to posts_path unless current_user == @post.user
   end
 
 end

@@ -1,4 +1,7 @@
 class PostCommentsController < ApplicationController
+
+  before_action :authenticate_user!
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.create(params[:comment].permit(:name, :body))
@@ -11,11 +14,17 @@ class PostCommentsController < ApplicationController
   end
 
   def edit
-
     @post = Post.find( params[:post_id] )
     @comment = @post.comments.find( params[:id] )
-    if current_user && @comment.try(:user) == current_user 
+
+    if @comment.try(:user) != current_user
+      redirect_to root_path
     end
+    # if current_user && @comment.try(:user) == current_user
+    # else
+    #   flash[:message] = "Hello"
+    #   redirect_to posts_path
+    # end
 
   end
 
@@ -23,12 +32,14 @@ class PostCommentsController < ApplicationController
     @post = Post.find(params[:post_id] )
     @comment = @post.comments.find( params[:id] )
 
-    if current_user && @comment.try(:user) == current_user 
+    if @comment.try(:user) == current_user
       if @comment.update( comment_params )
         redirect_to post_url( @post )
       else
         render :action => :edit
       end
+    else
+      redirect_to root_path
     end
 
   end
