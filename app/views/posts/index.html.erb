@@ -11,6 +11,7 @@
 <%= link_to 'Sort by Default', posts_path( :order => "created_at")%>
 <%= link_to 'Sort by last comment', posts_path( :order => "@com") %>
 
+<%= link_to 'Sort by view desc', posts_path( :order => "post_count desc") %>
 
 <p>
 <% @groups.try(:each) do |g| %>

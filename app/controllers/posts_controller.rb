@@ -25,10 +25,11 @@ class PostsController < ApplicationController
         sort_by = params[:order]
       elsif params[:order] == 'created_at'
         sort_by = params[:order]
+      elsif params[:order] == "post_count desc"
+        sort_by = params[:order]
       end
       @posts = @posts.order(sort_by)
     end
-
 
     if params[:group_id]
       @posts = Group.find(params[:group_id]).posts.page(params[:page]).per(5)

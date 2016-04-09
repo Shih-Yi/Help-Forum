@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160405140509) do
+ActiveRecord::Schema.define(version: 20160408094942) do
 
   create_table "attendees", force: :cascade do |t|
     t.string   "name"
@@ -60,8 +60,7 @@ ActiveRecord::Schema.define(version: 20160405140509) do
     t.datetime "updated_at",              null: false
     t.integer  "category_id"
     t.integer  "user_id"
-    t.integer  "post_count"
-    t.integer  "view_count",  default: 0
+    t.integer  "post_count",  default: 0
   end
 
   add_index "posts", ["category_id"], name: "index_posts_on_category_id"
