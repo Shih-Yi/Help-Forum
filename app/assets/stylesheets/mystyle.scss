@@ -1,0 +1,15 @@
+
+.sort td .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.sort td .asc {
+  background-image: url(up_arrow.gif);
+
+}
+
+.sort td .desc {
+  background-image: url(down_arrow.gif);
+}

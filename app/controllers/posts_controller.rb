@@ -1,8 +1,10 @@
 class PostsController < ApplicationController
 
+  helper_method :sort_column, :sort_direction
+
   before_action :authenticate_user!, :except => [:index]
   before_action :set_post, :only => [ :show, :edit, :update, :destroy]
-  before_filter :authenticate, except: [:index, :show]
+  # before_filter :authenticate, except: [:index, :show]
 
   def index
 
@@ -16,7 +18,8 @@ class PostsController < ApplicationController
       @post = Post.new
     end
 
-    # @page = params[:page]
+    @posts = Post.order(sort_column+" "+sort_direction).page(params[:page]).per(5)
+
 
     @com = @comments.last.try(:name)
 
@@ -25,7 +28,7 @@ class PostsController < ApplicationController
         sort_by = params[:order]
       elsif params[:order] == 'created_at'
         sort_by = params[:order]
-      elsif params[:order] == "post_count desc"
+      elsif params[:order] == 'post_count'
         sort_by = params[:order]
       end
       @posts = @posts.order(sort_by)
@@ -37,9 +40,6 @@ class PostsController < ApplicationController
 
   end
 
-  # def new
-  #   @post = Post.new
-  # end
 
   def create
     @post = Post.new(post_params)
@@ -56,15 +56,6 @@ class PostsController < ApplicationController
     @post.post_count!
 
   end
-
-  # def edit
-  #   @posts = Post.page(params[:page]).per(5)
-  #   if current_user != @post.user
-  #     flash[:notice] = "Don't modified another user's post!"
-  #     @post = Post.new
-  #   end
-  #   render :index
-  # end
 
   def update
     if current_user && @post.user == current_user
@@ -93,8 +84,16 @@ class PostsController < ApplicationController
 
   end
 
-  def authenticate
-    redirect_to posts_path unless current_user == @post.user
+  # def authenticate
+  #   redirect_to posts_path unless current_user == @post.user
+  # end
+
+  def sort_column
+    Post.column_names.include?(params[:sort]) ? params[:sort] : "name"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

@@ -7,11 +7,14 @@
   <p><%= f.submit "Update" %></p>
 <% end %>
 
-<%= link_to 'Sort by Name', posts_path( :order => "name") %>
-<%= link_to 'Sort by Default', posts_path( :order => "created_at")%>
-<%= link_to 'Sort by last comment', posts_path( :order => "@com") %>
-
-<%= link_to 'Sort by view desc', posts_path( :order => "post_count desc") %>
+<table class="sort">
+  <tr>
+    <td><%= sortable "name", "Sort_by_names" %></td>
+    <td><%= sortable "created_at", "Sort_by_created" %></td>
+    <td><%= link_to 'Sort by last comment', posts_path( :order => "@com") %></td>
+    <td><%= sortable "post_count", "Sort_by_views" %></td>
+  </tr>
+</table>
 
 <p>
 <% @groups.try(:each) do |g| %>
