@@ -21,14 +21,14 @@ class PostsController < ApplicationController
     @posts = Post.order(sort_column+" "+sort_direction).page(params[:page]).per(5)
 
 
-    @com = @comments.last.try(:name)
-
     if params[:order] # Parameter: {:xxx => "fdsuifd", :order => "sdf"}
       if params[:order] == 'name'
         sort_by = params[:order]
       elsif params[:order] == 'created_at'
         sort_by = params[:order]
       elsif params[:order] == 'post_count'
+        sort_by = params[:order]
+      elsif params[:order] == 'comment_number'
         sort_by = params[:order]
       end
       @posts = @posts.order(sort_by)

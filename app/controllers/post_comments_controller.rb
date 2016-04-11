@@ -7,10 +7,10 @@ class PostCommentsController < ApplicationController
     @comment = @post.comments.create(params[:comment].permit(:name, :body))
     @comment.user = current_user
     @comment.save
-
     redirect_to post_path(@post)
 
-
+    @post.comment_number = @post.comments.count 
+    @post.save
   end
 
   def edit
@@ -48,6 +48,9 @@ class PostCommentsController < ApplicationController
     @post = Post.find(params[:post_id] )
     @comment = @post.comments.find( params[:id] )
     @comment.destroy
+
+    @post.comment_number = @post.comments.count 
+    @post.save
 
     redirect_to post_url(@post)
   end

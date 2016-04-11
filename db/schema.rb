@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160408094942) do
+ActiveRecord::Schema.define(version: 20160411055929) do
 
   create_table "attendees", force: :cascade do |t|
     t.string   "name"
@@ -32,9 +32,10 @@ ActiveRecord::Schema.define(version: 20160408094942) do
     t.string   "name"
     t.text     "body"
     t.integer  "post_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "user_id"
+    t.integer  "comment_count", default: 0
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
@@ -56,11 +57,12 @@ ActiveRecord::Schema.define(version: 20160408094942) do
     t.string   "name"
     t.text     "description"
     t.boolean  "is_public"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.integer  "category_id"
     t.integer  "user_id"
-    t.integer  "post_count",  default: 0
+    t.integer  "post_count",     default: 0
+    t.integer  "comment_number", default: 0
   end
 
   add_index "posts", ["category_id"], name: "index_posts_on_category_id"

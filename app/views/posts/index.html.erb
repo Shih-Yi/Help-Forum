@@ -11,7 +11,7 @@
   <tr>
     <td><%= sortable "name", "Sort_by_names" %></td>
     <td><%= sortable "created_at", "Sort_by_created" %></td>
-    <td><%= link_to 'Sort by last comment', posts_path( :order => "@com") %></td>
+    <td><%= sortable "comment_number", "Sort_by_Comment_number" %></td>
     <td><%= sortable "post_count", "Sort_by_views" %></td>
   </tr>
 </table>
@@ -45,11 +45,10 @@
         <%= post.created_at %>
       </td>
       <td>
-        <%#= post.try(@com) %>
         <%= post.try(:comments).last.try(:updated_at) %>
       </td>
       <td>
-        <%= post.try(:comments).count %>
+        <%= post.try(:comment_number) %>
       </td>
       <td>
         <%= post.post_count %>
