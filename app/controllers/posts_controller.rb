@@ -54,7 +54,6 @@ class PostsController < ApplicationController
 
   def show
     @post.post_count!
-
   end
 
   def update

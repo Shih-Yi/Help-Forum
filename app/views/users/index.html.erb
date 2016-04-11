@@ -1,3 +1,6 @@
+<p>
+<%= link_to "Back_to_index", posts_path %>
+</p>
 
 <p>
 <%= form_tag users_path, :method => :get do %>
@@ -6,3 +9,20 @@
 <% end %>
 <p>
 
+<table class="table table-hover">
+  <tr>
+    <td><h3>Email</h3></td>
+    <td><h3>NAME</h3></td>
+  </tr>
+  <% @users.each do |u| %>
+    <tr>
+      <td>
+        <%= u.email %>  
+      </td>
+      <td>
+        <%= u.try(:first_name) %>  
+      </td>
+    </tr>
+  <% end %>
+
+</table>
