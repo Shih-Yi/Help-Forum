@@ -1,5 +1,6 @@
-
-
+<p>
+<%= link_to "Search User", users_path %>
+</p>
 <h2>New Post</h2>
 <%= form_for ([ @post]) do |f| %>
   <p><%= render :partial => 'form', :locals=> {:f=> f }%></p>
