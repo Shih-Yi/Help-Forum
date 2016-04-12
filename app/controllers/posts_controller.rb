@@ -53,7 +53,11 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post.post_count!
+    if cookies.signed["view-topic-#{@post.id}-user-#{current_user.id}"].nil?
+      @post.post_count!
+      cookies.signed["view-topic-#{@post.id}-user-#{current_user.id}"]  = Post.find("#{@post.id}")
+
+    end
   end
 
   def update
