@@ -2,8 +2,10 @@ class UsersController < ApplicationController
 
   def index
     if params[:keyword]
-      @users = User.where(["first_name like?", "%#{params[:keyword]}%"])
+      @users = User.where(["email like?", "%#{params[:keyword]}%"])
     end
+
+
 
     @users = User.all unless @users.present?
   end

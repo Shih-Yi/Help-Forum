@@ -9,6 +9,9 @@
 <% end %>
 <p>
 
+<p>
+</p>
+
 <table class="table table-hover">
   <tr>
     <td><h3>Email</h3></td>
@@ -17,10 +20,13 @@
   <% @users.each do |u| %>
     <tr>
       <td>
-        <%= u.email %>  
+        <%= link_to u.email, user_path(u) %>
       </td>
       <td>
-        <%= u.try(:first_name) %>  
+        <%= u.try(:first_name) %>
+      </td>
+      <td>
+        <%= link_to "Add Friend", friendships_path(:friend_id => u), :method => :post %>
       </td>
     </tr>
   <% end %>

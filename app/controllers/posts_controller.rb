@@ -12,11 +12,11 @@ class PostsController < ApplicationController
     @comments = Comment.all
     @posts = Post.page(params[:page]).per(5)
 
-    if params[:post_i] && current_user == Post.find(params[:post_i]).user
-      @post = Post.find(params[:post_i])
-    else
+    # if params[:post_i] && current_user == Post.find(params[:post_i]).user
+    #   @post = Post.find(params[:post_i])
+    # else
       @post = Post.new
-    end
+    # end
 
     @posts = Post.order(sort_column+" "+sort_direction).page(params[:page]).per(5)
 

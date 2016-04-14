@@ -2,15 +2,32 @@
   <tr>
     <td><h3>First Name</h3></td>
     <td><%= @user.first_name %></td>
-  </tr>  
+  </tr>
   <tr>
     <td><h3>Last Name</h3></td>
     <td><%= @user.last_name %></td>
-  </tr>  
+  </tr>
   <tr>
     <td><h3>Email</h3></td>
     <td><%= @user.email %></td>
   </tr>
 </table>
 
+<h3>Friends</h3>
+<ul>
+  <% for friend in @user.friends %>
+    <li>
+      <%= friend.email %>
+      (<%= link_to "remove", friendship_path(:friend_id => friend.id), :method => :delete %>)
+    </li>
+  <% end %>
+</ul>
 
+<p><%= link_to "Find Friends", users_path %></p>
+
+<h2>Friended by Users</h2>
+<ul>
+  <% for user in @user.inverse_friends %>
+    <li><%= user.email %></li>
+  <% end %>
+</ul>
