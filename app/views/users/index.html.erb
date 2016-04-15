@@ -17,7 +17,7 @@
     <td><h3>Email</h3></td>
     <td><h3>NAME</h3></td>
   </tr>
-  <% @users.each do |u| %>
+  <% @users.try(:each) do |u| %>
     <tr>
       <td>
         <%= link_to u.email, user_path(u) %>

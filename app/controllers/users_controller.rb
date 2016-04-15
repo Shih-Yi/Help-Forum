@@ -1,13 +1,15 @@
 class UsersController < ApplicationController
 
   def index
-    if params[:keyword]
+    if params[:keyword] == nil
+      @users = current_user.friends
+    else params[:keyword]
       @users = User.where(["email like?", "%#{params[:keyword]}%"])
     end
 
 
 
-    @users = User.all unless @users.present?
+    # @users = User.all unless @users.present?
   end
 
   def show
