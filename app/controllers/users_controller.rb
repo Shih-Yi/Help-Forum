@@ -12,6 +12,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
+    @user_commented_posts = Post.where(id: current_user.comments.pluck(:post_id).uniq)
   end
 
   private

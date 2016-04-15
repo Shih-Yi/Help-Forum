@@ -31,3 +31,8 @@
     <li><%= user.email %></li>
   <% end %>
 </ul>
+
+
+<% @user_commented_posts.each do |p| %>
+  <p><%= link_to p.name, post_path(p) %><p>
+<% end %>
