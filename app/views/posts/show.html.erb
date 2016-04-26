@@ -14,6 +14,8 @@
   <p><%=simple_format @post.description %></p>
 </div>
 
+<div id="rateYo"></div>
+
 <%= link_to "Back to homepage", posts_path %>
 
 <h4><%= @post.try(:comment_number) %>Comments</h4>

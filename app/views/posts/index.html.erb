@@ -28,6 +28,7 @@
   <tr>
     <td><h3>Post</h3></td>
     <td><h3>Author</h3></td>
+    <td><h3>star</h3></td>
     <td><h3>Created time</h3></td>
     <td><h3>Last Comment Created time</h3></td>
     <td><h3>Comment counts</h3></td>
@@ -41,6 +42,9 @@
       </td>
       <td>
         <%= post.user.try(:email) %>
+      </td>
+      <td>
+        <div id="rateYo"></div>
       </td>
       <td>
         <%= post.created_at %>
