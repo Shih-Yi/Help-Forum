@@ -15,6 +15,8 @@
 </div>
 
 <div id="rateYo"></div>
+<button class="button">give reviews</button>
+<p><%#= link_to "give reviews", new_post_comment_path(@post, @review) %></p>
 
 <%= link_to "Back to homepage", posts_path %>
 
@@ -27,3 +29,33 @@
 </div>
 <h4>Add a comment:</h4>
 <%= render "post_comments/form" %>
+
+
+<script>
+  $(function () {
+
+  var $rateYo = $("#rateYo").rateYo();
+
+  $(".button").click(function () {
+    /* get rating */
+    var rating = $rateYo.rateYo("rating");
+    console.log(rating);
+
+
+      var post_id =  <%= @post.id %>;
+      $.ajax({
+        type: 'POST',
+        url: "/posts/" + post_id + "/reviews",
+        dataType: 'JSON',
+        data: {
+          rating: rating
+        },
+        success: function(){
+        }
+      });
+
+
+  });
+});
+
+</script>
