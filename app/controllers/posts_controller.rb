@@ -58,6 +58,13 @@ class PostsController < ApplicationController
       cookies.signed["view-topic-#{@post.id}-user-#{current_user.id}"]  = Post.find("#{@post.id}")
 
     end
+
+    @reviews = Review.where(post_id: @post)
+    if @reviews.blank?
+      @raty = 0
+    else
+      @raty = @reviews.average(:rating).round(2)
+    end
   end
 
   def update

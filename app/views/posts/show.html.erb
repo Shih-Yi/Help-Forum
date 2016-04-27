@@ -15,8 +15,10 @@
 </div>
 
 <div id="rateYo"></div>
-<button class="button">give reviews</button>
-<p><%#= link_to "give reviews", new_post_comment_path(@post, @review) %></p>
+<!-- <button class="button" id="hello">give reviews</button> -->
+<%= link_to "give reviews", post_reviews_path(@post), method: :post, remote: true, class: "button" %>
+
+<p><div id="content"><%= @raty %></div></p>
 
 <%= link_to "Back to homepage", posts_path %>
 
@@ -32,6 +34,20 @@
 
 
 <script>
+
+$(function () {
+
+  $("#rateYo").rateYo({
+    starWidth: "40px",
+    numStars: 5,
+    halfStar: true,
+    rating: <%= @raty %>
+  });
+});
+
+
+
+
   $(function () {
 
   var $rateYo = $("#rateYo").rateYo();
@@ -39,23 +55,21 @@
   $(".button").click(function () {
     /* get rating */
     var rating = $rateYo.rateYo("rating");
-    console.log(rating);
-
-
       var post_id =  <%= @post.id %>;
       $.ajax({
         type: 'POST',
         url: "/posts/" + post_id + "/reviews",
         dataType: 'JSON',
         data: {
+          // user_id: <%= current_user %>
           rating: rating
         },
         success: function(){
+          // $("#content").html("asd");
         }
       });
-
-
   });
+
 });
 
 </script>

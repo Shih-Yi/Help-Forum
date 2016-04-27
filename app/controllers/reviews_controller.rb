@@ -10,14 +10,21 @@ class ReviewsController < ApplicationController
   end
 
   def create
+
     @review = Review.new( :rating => params[:rating] )
     @review.post = @post
     @review.save
+    @reviews = Review.where(post_id: @post)
+
+    if @reviews.blank?
+      @raty = 0
+    else
+      @raty = @reviews.average(:rating).round(2).to_f
+    end
+
 
     respond_to do |format|
-      format.json{
-        render :json => {:rating => @review.rating}
-      }
+       format.js
     end
 
   end
